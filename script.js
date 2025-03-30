@@ -9,8 +9,10 @@ const botao = document.getElementById('botao');
 //pega cep
 cep.addEventListener('focusout', () => {
     let meuCep = cep.value;
-    if(!(meuCep.length == 8)) {
+    if(!(meuCep.length == 8) || /^\d+$/.test(meuCep) == false) {
         alert("CEP não é válido");
+        console.log(/^\d+$/.test(meuCep));
+        
     }else {
         fetch(`https://viacep.com.br/ws/${meuCep}/json/`)
             .then(x => x.json())
@@ -19,8 +21,6 @@ cep.addEventListener('focusout', () => {
                 bairro.value = y.bairro;
                 cidade.value = y.localidade;
                 uf.value = y.uf;
-                console.log(meuCep);
-                
             });
     }
 });
